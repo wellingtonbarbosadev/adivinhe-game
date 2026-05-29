@@ -32,6 +32,28 @@ function App() {
     setLetter("");
   }
 
+  function handleConfirmButton() {
+    if (!letter.trim()) {
+      return alert("Digite uma letra!")
+    }
+
+    setAttempts(attempts + 1)
+
+    const value = letter.toUpperCase()
+
+    const exists = lettersUsed.find((used) => used.value === value)
+
+    if (exists) {
+      return alert("Letra já utilizada!")
+    }
+
+    const letterIsCorrect = challenge.word.toUpperCase().includes(letter.toUpperCase()) ? true : false
+
+    setLettersUsed((prev) => [...prev, {value, correct: letterIsCorrect}])
+
+    setLetter("");
+  }
+
   useEffect(() => {
     startGame();
   }, []);
@@ -44,19 +66,19 @@ function App() {
     <div className={styles.container}>
       <main>
         <Header current={attempts} max={10} onRestart={handleRestartGame} />
-        <Tip tip="Uma das linguagens de programação mais utilizadas" />
+        <Tip tip={challenge.tip} />
 
         <div className={styles.word}>
-          {challenge.word.split("").map(() => (
-            <Letter value="" />
+          {challenge.word.toUpperCase().split("").map((letterNow) => (
+            <Letter value={lettersUsed.map((letter) => letter.value).includes(letterNow) ? letterNow : ""} />
           ))}
         </div>
 
         <h4>Palpite</h4>
 
         <div className={styles.guess}>
-          <Input autoFocus maxLength={1} placeholder="?" />
-          <Button title="Confirmar" />
+          <Input autoFocus maxLength={1} value={letter} placeholder="?" onChange={(e) => setLetter(e.target.value)}/>
+          <Button title="Confirmar" onClick={handleConfirmButton}/>
         </div>
 
         <LettersUsed data={lettersUsed} />
