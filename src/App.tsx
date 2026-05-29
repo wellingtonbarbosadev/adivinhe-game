@@ -14,7 +14,8 @@ import { use, useEffect, useState } from "react";
 
 function App() {
   function handleRestartGame() {
-    setAttempts(0);
+    startGame()
+
   }
 
   const [attempts, setAttempts] = useState(0);
@@ -29,6 +30,7 @@ function App() {
 
     setChallenge(randomWord);
     setAttempts(0);
+    setLettersUsed([])
     setLetter("");
   }
 
@@ -38,6 +40,11 @@ function App() {
     }
 
     setAttempts(attempts + 1)
+
+    if (attempts >= 10) {
+      setAttempts(10)
+      return alert("Máximo de tentativas atingidos!")
+    };
 
     const value = letter.toUpperCase()
 
@@ -57,6 +64,7 @@ function App() {
   useEffect(() => {
     startGame();
   }, []);
+
 
   if (!challenge) {
     return;
