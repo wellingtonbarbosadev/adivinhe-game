@@ -17,9 +17,10 @@ export const LettersUsed = ({ data }: Props) => {
       <h5>Letras utilizadas</h5>
 
       <div>
-        {data.map(({ value, correct }) => (
+        {data.map(({ value, correct}, index) => (
           <Letter
             value={value}
+            key={index}
             size="small"
             color={correct ? "correct" : "wrong"}
           />
