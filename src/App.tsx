@@ -10,7 +10,7 @@ import { WORDS } from "./utils/words";
 import type { Challenge } from "./utils/words";
 
 import styles from "./app.module.css";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   function handleRestartGame() {
